@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <script>
+            // function findSum(n){
+            //     var sum=0;
+            //     for(var i=1;i<=n;i++){
+            //         sum+=i;
+            //         document.querySelector('#div1').innerText=sum;
+            //     }
+            // }
+            function init(){
+                var worker=new Worker("workersDemo.js");
+                worker.postMessage(10);
+                console.log("worker Intiated");
+                worker.onmessage=function(e){
+                    document.querySelector("#div1").innerText=e.data;
+                }
+            }
+            function name2(){
+                var worker=new Worker("name.js");
+                var values={
+                    'key1':document.forms[0].elements[0].value,
+                    'key2':document.forms[0].elements[1].value
+                };
+                console.log("worker Intiated");
+                worker.postMessage(values);
+                worker.onmessage=function(e){
+                    document.querySelector("#result1").innerText=e.data;
+                }
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <input type="button" value="TEST" onclick="alert('welcome')">
+        <div id="div1"></div>
+        <form>
+            <input type="text">
+            <input type="text">
+            <input type="button" value="ACTION" onclick="name2()">
+            <div id="result1"></div>
+        </form>
+    </body>
+</html>
